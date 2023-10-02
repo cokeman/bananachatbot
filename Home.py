@@ -1,6 +1,7 @@
 import utils
 import streamlit as st
 from streaming import StreamHandler
+import toml
 
 from langchain.llms import OpenAI
 from langchain.chains import ConversationChain,ConversationalRetrievalChain
@@ -43,7 +44,9 @@ class ContextChatbot:
 
     def loadCSV(self):
         from urllib import request
-        remote_url = 'https://tienda.bananacomputer.com/?chatbot=1&action=getProducts'
+
+        config = toml.load(".streamlit/config.toml")
+        remote_url = config["data"]["BANANA_REMOTE_URL"]
         local_file = 'catalogo.csv'
         request.urlretrieve(remote_url, local_file)
 

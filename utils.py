@@ -1,6 +1,7 @@
 import os
 import random
 import streamlit as st
+import toml
 
 #decorator
 
@@ -40,7 +41,9 @@ def display_msg(msg, author):
     st.chat_message(author).write(msg)
 
 def configure_openai_api_key():
-    openai_api_key = "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"
+    config = toml.load(".streamlit/config.toml")
+
+    openai_api_key = config["data"]["OPENAI_SECRET_KEY"]
     
     st.session_state['OPENAI_API_KEY'] = openai_api_key
     os.environ['OPENAI_API_KEY'] = openai_api_key
